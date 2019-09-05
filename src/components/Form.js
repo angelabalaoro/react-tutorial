@@ -5,6 +5,7 @@ class Form extends Component {
         super(props);
         
         this.initialState = {
+            id: 0,
             name: '',
             job: ''
         };
@@ -23,8 +24,11 @@ class Form extends Component {
     onFormSubmit = (event) => {
         event.preventDefault();
         
-        this.props.handleSubmit(this.state);
-        this.setState(this.initialState);
+        this.setState({id: this.state.id + 1}, () => {
+            this.props.handleSubmit(this.state);
+            this.initialState.id = this.state.id;
+            this.setState(this.initialState); 
+        });                               
     }
 
     render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+
 
 const Home = () => {
   return (
@@ -26,7 +26,22 @@ const Contact = () => {
   )
 }
 
+const Child = ({ match }) => {
+  console.log(match) ;
+  return (    
+    <div>
+      <h3>ID: {match.params.id}</h3>
+    </div>
+  )
+}
+
 class AppRouter extends Component {
+  state = {
+    toHome: false,
+    toContract: false,
+    toAbout: false
+  }
+
   render() {
     return (
       <Router>
@@ -36,6 +51,7 @@ class AppRouter extends Component {
               <li><Link to={'/'} className="nav-link"> Home </Link></li>
               <li><Link to={'/contact'} className="nav-link">Contact</Link></li>
               <li><Link to={'/about'} className="nav-link">About</Link></li>
+              <li><Link to={'/others'} className="nav-link">Others</Link></li>
             </ul>
           </nav>
           <hr />
@@ -43,6 +59,7 @@ class AppRouter extends Component {
               <Route exact path='/' component={Home} />
               <Route path='/contact' component={Contact} />
               <Route path='/about' component={About} />
+              <Route path="/:id" component={Child}/>
           </Switch>
         </div>
       </Router>
